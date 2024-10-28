@@ -42,6 +42,15 @@ const uint8ArrayToUrl = (uint8Array: Uint8Array): Promise<string> => {
   });
 };
 
+function downloadImage() {
+  const link = document.createElement('a');
+  link.href = imgInfo.value.quantFileUrl;
+  link.download = 'compressed-image.png'; // 设置下载文件的名称
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 onMounted(async () => {
   await init()
   // greet()
@@ -96,7 +105,10 @@ async function handleFileChange(event: Event) {
       <div class="text-base py-4 text-gray-200/70 flex items-start justify-between">
         <p class="mb-12">Lossy compression of PNG on the WASM. The image files will not be uploaded to the server.</p>
         <div class="flex items-center">
-          <button type="button" class="bg-gray-300/20 py-2 px-4 rounded-md transition-all ease-in-out hover:bg-gray-300/40">下载</button>
+          <button type="button" @click="downloadImage"
+                  class="bg-gray-300/20 py-2 px-4 rounded-md transition-all ease-in-out hover:bg-gray-300/40">
+            Download
+          </button>
         </div>
       </div>
       <div class="mb-2 flex gap-4">
