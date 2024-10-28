@@ -94,7 +94,7 @@ async function handleFileChange(event: Event) {
                @change="handleFileChange">
       </div>
       <div class="text-base py-4 text-gray-200/70 flex items-start justify-between">
-        <p class="mb-12">Lossy compression of PNG on the frontend. Data will not be uploaded to the server.</p>
+        <p class="mb-12">Lossy compression of PNG on the WASM. The image files will not be uploaded to the server.</p>
         <div class="flex items-center">
           <button type="button" class="bg-gray-300/20 py-2 px-4 rounded-md transition-all ease-in-out hover:bg-gray-300/40">下载</button>
         </div>
