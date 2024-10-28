@@ -94,7 +94,7 @@ async function handleFileChange(event: Event) {
                @change="handleFileChange">
       </div>
       <div class="text-base py-4 text-gray-200/70 flex items-start justify-between">
-        <p class="mb-12">纯前端有损压缩 PNG,数据不会上传到服务器。</p>
+        <p class="mb-12">Lossy compression of PNG on the frontend. Data will not be uploaded to the server.</p>
         <div class="flex items-center">
           <button type="button" class="bg-gray-300/20 py-2 px-4 rounded-md transition-all ease-in-out hover:bg-gray-300/40">下载</button>
         </div>
@@ -102,45 +102,15 @@ async function handleFileChange(event: Event) {
       <div class="mb-2 flex gap-4">
         <div v-if="imgInfo.oldFileUrl && imgInfo.quantFileUrl" class="grid grid-cols-2 gap-4">
           <div>
-            <div class="mb-2">压缩前: {{ formatBytes(diff.before) }}</div>
+            <div class="mb-2">Before: {{ formatBytes(diff.before) }}</div>
             <img :src="imgInfo.oldFileUrl" alt="">
           </div>
           <div>
-            <div class="mb-2">压缩后: {{ formatBytes(diff.after) }}</div>
+            <div class="mb-2">After: {{ formatBytes(diff.after) }}</div>
             <img :src="imgInfo.quantFileUrl" alt=""></div>
         </div>
       </div>
 
     </main>
   </div>
-
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
