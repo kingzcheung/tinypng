@@ -12,8 +12,8 @@ importers:
         specifier: ^0.453.0
         version: 0.453.0(vue@3.5.12(typescript@5.6.3))
       tinypng:
-        specifier: file:tiny/pkg
-        version: file:tiny/pkg
+        specifier: file:wasm
+        version: file:wasm
       vue:
         specifier: ^3.5.12
         version: 3.5.12(typescript@5.6.3)
@@ -1056,8 +1056,8 @@ packages:
   thenify@3.3.1:
     resolution: {integrity: sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==}
 
-  tinypng@file:tiny/pkg:
-    resolution: {directory: tiny/pkg, type: directory}
+  tinypng@file:wasm:
+    resolution: {directory: wasm, type: directory}
 
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
@@ -2132,7 +2132,7 @@ snapshots:
     dependencies:
       any-promise: 1.3.0
 
-  tinypng@file:tiny/pkg: {}
+  tinypng@file:wasm: {}
 
   to-regex-range@5.0.1:
     dependencies:
