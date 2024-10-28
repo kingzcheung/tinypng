@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
-export function quant_png(a: number, b: number): Array;
+export function quant_png(a: number, b: number, c: number, d: number): Array;
 export function greet(): void;
 export function lodepng_malloc(a: number): number;
 export function lodepng_realloc(a: number, b: number): number;
@@ -82,5 +82,6 @@ export function lodepng_color_profile_init(a: number): void;
 export function lodepng_chunk_next_const(a: number): number;
 export const __wbindgen_export_0: WebAssembly.Table;
 export function __wbindgen_malloc(a: number, b: number): number;
+export function __externref_table_dealloc(a: number): void;
 export function __wbindgen_free(a: number, b: number, c: number): void;
 export function __wbindgen_start(): void;

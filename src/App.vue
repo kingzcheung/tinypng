@@ -3,12 +3,17 @@ import {Undo2} from 'lucide-vue-next'
 import init, {quant_png} from 'tinypng'
 import {onMounted, ref} from "vue";
 import {formatBytes} from "@/lib/utils";
+import {Slider} from '@/components/ui/slider'
+import {Button} from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 
 interface ImgInfo {
   oldFileUrl: string
   quantFileUrl: string
 }
 
+const fileInput = ref<HTMLInputElement>()
+const quality = ref([70])
 const diff = ref<{ before: number, after: number }>({
   before: 0,
   after: 0
@@ -35,7 +40,7 @@ const fileToDataUrl = (file: File): Promise<string> => {
 };
 
 const uint8ArrayToUrl = (uint8Array: Uint8Array): Promise<string> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, _reject) => {
     const blob = new Blob([uint8Array], {type: 'image/png'});
     const url = URL.createObjectURL(blob);
     resolve(url);
@@ -62,20 +67,27 @@ async function fileToUint8Array(file: File) {
   return new Uint8Array(arrayBuffer);
 }
 
-async function handleFileChange(event: Event) {
-  console.log(event.target)
+async function onUploadChange (event: Event) {
+//  添加到预览
   let target = event.target as HTMLInputElement
   if (target.files) {
     let file: File = target.files[0]
     diff.value.before = file.size
     imgInfo.value.oldFileUrl = await fileToDataUrl(file)
-    const uint8Array = await fileToUint8Array(file);
-    const res = quant_png(uint8Array)
-    diff.value.after = res.length
-    imgInfo.value.quantFileUrl = await uint8ArrayToUrl(res)
-    console.log(res)
   }
 }
+
+async function handleFileChange() {
+  if (!fileInput.value) return;
+  if (fileInput.value.files) {
+    let file: File = fileInput.value.files[0]
+    const uint8Array = await fileToUint8Array(file);
+    const res = quant_png(uint8Array, 70, 4)
+    diff.value.after = res.length
+    imgInfo.value.quantFileUrl = await uint8ArrayToUrl(res)
+  }
+}
+
 </script>
 
 <template>
@@ -93,36 +105,61 @@ async function handleFileChange(event: Event) {
     </header>
 
     <main class="pt-24 w-[1000px] mx-auto">
-
       <div
           class="relative text-center bg-gray-300/10 hover:bg-indigo-200/20 border-2 border-dashed border-gray-50/30 hover:border-indigo-300/60 p-12 rounded-3xl transition-all ">
         <div class="text-gray-200/60 ">Drag and Drop png file here or <span
             class="underline font-medium">Choose file</span></div>
         <input type="file" accept="image/png"
-               class="block absolute cursor-pointer top-0 right-0 left-0 bottom-0 opacity-0" ref="fileInput"
-               @change="handleFileChange">
+               class="block absolute cursor-pointer top-0 right-0 left-0 bottom-0 opacity-0" @change="onUploadChange" ref="fileInput">
       </div>
       <div class="text-base py-4 text-gray-200/70 flex items-start justify-between">
         <p class="mb-12">Lossy compression of PNG on the WASM. The image files will not be uploaded to the server.</p>
-        <div class="flex items-center">
-          <button type="button" @click="downloadImage"
-                  class="bg-gray-300/20 py-2 px-4 rounded-md transition-all ease-in-out hover:bg-gray-300/40">
-            Download
-          </button>
-        </div>
+
       </div>
       <div class="mb-2 flex gap-4">
-        <div v-if="imgInfo.oldFileUrl && imgInfo.quantFileUrl" class="grid grid-cols-2 gap-4">
-          <div>
-            <div class="mb-2">Before: {{ formatBytes(diff.before) }}</div>
-            <img :src="imgInfo.oldFileUrl" alt="">
+        <div class="mb-4">
+          <div v-if="imgInfo.oldFileUrl" class="mb-4 bg-slate-200/20 shrink w-[300px] p-4 border rounded-md border-slate-600">
+            <div class="flex items-center justify-between px-2 mb-2">
+              <span class="text-sm">Quality</span>
+              <span class="text-sm">{{ quality[0] }}%</span>
+            </div>
+            <div class="mb-4">
+              <Slider
+                  v-model="quality"
+                  :default-value="[70]" :min="20" :max="100" :step="1"
+              />
+            </div>
+            <div class="mb-4">
+              <div class="mb-2"><span class="inline-block w-24 text-sm text-slate-300">Before size</span>
+                <span>{{ formatBytes(diff.before) }}</span></div>
+              <div class="mb-2"><span class="inline-block w-24 text-sm text-slate-300">After size</span>
+                <span>{{ formatBytes(diff.after) }}</span></div>
+            </div>
+            <div>
+              <Button type="button" @click="handleFileChange"
+                      class="bg-gray-300/20 w-full py-2 px-4 rounded-md transition-all ease-in-out hover:bg-gray-300/40 mb-4">
+                Compress Image
+              </Button>
+            </div>
           </div>
           <div>
-            <div class="mb-2">After: {{ formatBytes(diff.after) }}</div>
-            <img :src="imgInfo.quantFileUrl" alt=""></div>
+            <Button type="button" v-if="imgInfo.quantFileUrl" @click="downloadImage"
+                    class="bg-gray-300/20 w-full py-2 px-4 rounded-md transition-all ease-in-out hover:bg-gray-300/40">
+              Download Image
+            </Button>
+          </div>
+        </div>
+        <div v-if="imgInfo.oldFileUrl" class="grid grid-cols-2 gap-4 w-full bg-gray-300/10  border-slate-600 p-2 rounded-md">
+          <div class="relative">
+            <img :src="imgInfo.oldFileUrl" alt="">
+            <Badge class="absolute top-1 left-1 bg-slate-900/60">Before</Badge>
+          </div>
+          <div class="relative">
+            <img :src="imgInfo.quantFileUrl" alt="">
+            <Badge  class="absolute top-1 left-1 bg-slate-900/60">After</Badge>
+          </div>
         </div>
       </div>
-
     </main>
   </div>
 </template>

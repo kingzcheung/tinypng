@@ -3,15 +3,17 @@
 export function greet(): void;
 /**
  * @param {Uint8Array} data
+ * @param {number} quality
+ * @param {number} speed
  * @returns {Uint8Array}
  */
-export function quant_png(data: Uint8Array): Uint8Array;
+export function quant_png(data: Uint8Array, quality: number, speed: number): Uint8Array;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
-  readonly quant_png: (a: number, b: number) => Array;
+  readonly quant_png: (a: number, b: number, c: number, d: number) => Array;
   readonly greet: () => void;
   readonly lodepng_malloc: (a: number) => number;
   readonly lodepng_realloc: (a: number, b: number) => number;
@@ -92,6 +94,7 @@ export interface InitOutput {
   readonly lodepng_chunk_next_const: (a: number) => number;
   readonly __wbindgen_export_0: WebAssembly.Table;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
+  readonly __externref_table_dealloc: (a: number) => void;
   readonly __wbindgen_free: (a: number, b: number, c: number) => void;
   readonly __wbindgen_start: () => void;
 }

@@ -14,6 +14,6 @@ pub fn greet() {
 }
 
 #[wasm_bindgen]
-pub fn quant_png(data:&[u8]) -> Vec<u8> {
-    tiny::quant_png(data)
+pub fn quant_png(data: &[u8], quality: u8, speed: i32) -> Result<Vec<u8>, JsError> {
+    tiny::quant_png(data,quality,speed)
 }
