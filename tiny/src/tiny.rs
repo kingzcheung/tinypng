@@ -41,7 +41,7 @@ pub fn quant_png(data: &[u8], quality: u8, speed: i32) -> Result<Vec<u8>, JsErro
 
     let mut liq = imagequant::new();
     liq.set_speed(speed).map_err(JsError::from)?;
-    liq.set_quality(quality, 99).map_err(JsError::from)?;
+    liq.set_quality(20, quality).map_err(JsError::from)?;
 
     let mut img = liq
         .new_image(bitmap.buffer, width, height, 0.0)
