@@ -82,7 +82,7 @@ async function handleFileChange() {
   if (fileInput.value.files) {
     let file: File = fileInput.value.files[0]
     const uint8Array = await fileToUint8Array(file);
-    const res = quant_png(uint8Array, 70, 4)
+    const res = quant_png(uint8Array, quality.value[0], 4)
     diff.value.after = res.length
     imgInfo.value.quantFileUrl = await uint8ArrayToUrl(res)
   }
