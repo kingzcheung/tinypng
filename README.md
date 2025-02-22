@@ -1,33 +1,55 @@
-# tinypng
 
-This template should help get you started developing with Vue 3 in Vite.
+# TinyPNG - Browser-based PNG Compression Tool
 
-## Recommended IDE Setup
+#### Project Overview
+TinyPNG is a browser-based tool for compressing PNG images. It operates entirely within the browser without requiring any backend services, ensuring that user data is never transmitted to external servers. The core compression algorithm is implemented using Rust + WebAssembly (WASM), while the frontend is built with Vue.js and Vite.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+This is a small experiment to verify Rust WASM.
 
-## Type Support for `.vue` Imports in TS
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+#### Technology Stack
+- **Core Algorithm**: Rust + WebAssembly (WASM)
+- **Frontend Framework**: Vue.js 3.x
+- **Build Tool**: Vite
+- **Development Environment**: TypeScript support
 
-## Customize configuration
+#### Features
+- Pure frontend implementation with no backend dependency
+- All image compression occurs within the browser, ensuring user privacy
+- Drag-and-drop file upload support
+- Real-time preview of compression results
+- Display of file size comparison before and after compression
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+#### Usage
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/kingzcheung/tinypng
+   cd tinypng
+   ```
 
-## Project Setup
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```sh
-pnpm install
-```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-### Compile and Hot-Reload for Development
+4. Access the application at `http://localhost:3000`
 
-```sh
-pnpm dev
-```
+#### Building and Deployment
+1. Build the production version:
+   ```bash
+   npm run build
+   ```
 
-### Type-Check, Compile and Minify for Production
+2. Deploy the static files to a server or CDN
 
-```sh
-pnpm build
-```
+
+#### License
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
+#### Acknowledgments
+Thank you to all the developers who have contributed to this project!
